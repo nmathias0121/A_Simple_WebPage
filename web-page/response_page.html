@@ -2,30 +2,7 @@
  <head>
   <title>Simple Web Page</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <script type="text/javascript">
-    let params = new URLSearchParams(location.search);
-    window.onload = function() {
-      const name = params.get("preferredname");
-      document.getElementById("thankname").innerText = name;
-      document.getElementById("foodploy").innerText = params.get("food");
-      
-      const secret = params.get("secret");
-      if (secret == "magic" || secret == "abracadabra") {
-        const secretButton = document.createElement("button");
-        secretButton.setAttribute("id", "secretButton");
-        secretButton.textContent = "Take me to the secrets.";
-
-        const secretURL = `secret.html?preferredname=${name}&secret=${secret}`;
-        secretButton.onclick = function() {
-          const duration = 500;
-          setTimeout(function() { location.href=secretURL; }, duration);
-        };
-
-        const secretArea = document.getElementById("secrets");
-        secretArea.appendChild(secretButton);
-      }
-    }
-  </script>
+  <script src="response.js"></script>
  </head>
  <body>
    <p>
