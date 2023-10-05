@@ -3,6 +3,15 @@ import os
 
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
+from contextlib import contextmanager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.expected_conditions import staleness_of
+
+@contextmanager
+def wait_for_page_load(driver, timeout=30):
+    old_page = driver.find_element_by_tag_name('html')
+    yield
+    WebDriverWait(driver, timeout).until( staleness_of(old_page) )
 
 def test_nonsecret_scenario():
 
@@ -18,5 +27,6 @@ def test_nonsecret_scenario():
     options.add_argument("--no-sandbox")
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
-
     driver.get(landing_page)
+
+    wait_for_page_load(driver)
