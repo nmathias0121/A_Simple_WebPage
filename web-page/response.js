@@ -10,7 +10,7 @@ window.onload = function() {
     secretButton.setAttribute("id", "secretButton");
     secretButton.textContent = "Take me to the secrets.";
 
-    const secretURL = `secret.html?preferredname=${name}&secret=${secret}`;
+    const secretURL = `secret_page.html?preferredname=${name}&secret=${secret}`;
     secretButton.onclick = function() {
         const duration = 500;
         setTimeout(function() { location.href=secretURL; }, duration);
