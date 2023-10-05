@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import time
 
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
@@ -62,5 +63,51 @@ def test_nonsecret_scenario():
 
     food_ploy = driver.find_element(By.ID, 'foodploy')
     assert food_ploy.text == 'pizza'
+
+    driver.quit()
+
+
+def test_secret_scenario():
+    landing_page = get_landing_page_url()
+    driver = construct_headless_chrome_driver()
+
+    driver.get(landing_page)
+
+    preferred_name = driver.find_element(By.ID, 'preferredname')
+    preferred_name.send_keys('Neil')
+
+    food = driver.find_element(By.ID,'food')
+    food.send_keys('pizza')
+
+    secret = driver.find_element(By.ID,'secret')
+    secret.send_keys('magic')
+
+    submit_button = driver.find_element(By.ID,'submit')
+    submit_button.click()
+
+    wait_for_page_load(driver)
+
+    k = driver.current_url
+    assert 'web-page/response_page.html?preferredname=Neil&food=pizza&secret=magic' in k
+
+    thank_name = driver.find_element(By.ID, 'thankname')
+    assert thank_name.text == 'Neil'
+
+    food_ploy = driver.find_element(By.ID, 'foodploy')
+    assert food_ploy.text == 'pizza'
+
+    secret_button = driver.find_element(By.ID, 'secretButton')
+    secret_button.click()
+
+    time.sleep(1) 
+
+    j = driver.current_url
+    assert 'web-page/secret_page.html?preferredname=Neil&secret=magic' in j
+
+    thank_name = driver.find_element(By.ID, 'thankname')
+    assert thank_name.text == 'Neil'
+
+    secret = driver.find_element(By.ID,'secret')
+    assert secret.text == 'magic'
 
     driver.quit()
