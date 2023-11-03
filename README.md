@@ -1,5 +1,5 @@
 # A_Simple_WebPage
-A Basic webpage developed in HTML and JavaScript, tested using Python Selenium
+A Basic webpage developed in HTML and JavaScript, UI tested using Python Selenium
 
 # Files
 - web-page
