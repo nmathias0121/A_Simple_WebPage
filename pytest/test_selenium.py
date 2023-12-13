@@ -4,18 +4,20 @@ import time
 
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from contextlib import contextmanager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.common.by import By
 
 def construct_headless_chrome_driver():
+    service = Service(executable_path='./chromedriver.exe')
     options = Options()
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--headless")
-    return webdriver.Chrome(options=options)
+    return webdriver.Chrome(service=service, options=options)
 
 
 def get_landing_page_url():
@@ -111,3 +113,4 @@ def test_secret_scenario():
     assert secret.text == 'magic'
 
     driver.quit()
+
